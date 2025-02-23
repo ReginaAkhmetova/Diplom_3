@@ -11,10 +11,21 @@ class MainPageLocators:
     BUN_INGREDIEN = (By.XPATH, '//p[text()="Флюоресцентная булка R2-D3"]')
     POPUP_INGREDIENT_DETAILS = (By.XPATH, '//h2[text()="Детали ингредиента"]')
     CLOSE_BUTTON = (By.XPATH, '//button[contains(@class,"close")]')
-    INGREDIENT_COUNTER = (By.XPATH, '//ul[1]/a[1]//p[contains(@class, "num")]')  # Счетчик
+    INGREDIENT_COUNTER = (
+        By.XPATH,
+        (
+            '//h2[text() = "Булки"]/following-sibling::ul[1]/*/'
+            'p[text()="Флюоресцентная булка R2-D3"]/parent::a/*/'
+            'p[contains(@class, "counter_counter__num__")]'
+        )
+    )  # Счетчик
     INGREDIENT_COUNTER_VALUE = (
         By.XPATH,
-        '//ul[1]/a[1]//p[contains(@class, "num") and text() = "{}"]',
+        (
+            '//h2[text() = "Булки"]/following-sibling::ul[1]/*/'
+            'p[text()="Флюоресцентная булка R2-D3"]/parent::a/*/'
+            'p[contains(@class, "counter_counter__num__") and text() = "{}"]'
+        )
     )  # Счетчик специфик
     BASKET = (By.XPATH, "//span[@class='constructor-element__text' and text()='Перетяните булочку сюда (низ)']")
     ORDER_BUTTON = (By.XPATH, '//button[text()="Оформить заказ"]')  # кнопка "Оформить заказ"
@@ -71,6 +82,8 @@ class PersonalAccountPageLocators:
 class OrderPageLocators:
     HL_ORDER_LIST = (By.XPATH, '//h1[text()="Лента заказов"]')  # Заголовок "Лента заказов"
     ORDER_STRUCTURE = By.XPATH, '//p[text()="Cостав"]'  # Состав
+    # берем второй элемент в списке, потому что нам без разницы какой элемент взять - этот локатор
+    # используется тестом, который просто проверяе, что если клинкуть на заказ - то откроется модальное окно
     ORDER_CARD = (By.XPATH, "(//a[contains(@class,'OrderHistory_link__')])[2]")
     ORDER_LIST_LINK = By.XPATH, '//*[contains(@class, "OrderHistory_link")]'  # ссылка на заказ в Ленте заказов
     ORDERS_HISTORY = (
@@ -81,6 +94,9 @@ class OrderPageLocators:
         By.XPATH,
         ".//div[@class='OrderHistory_textBox__3lgbs mb-6']//p[@class='text text_type_digits-default']",
     )
+    # здесь берем просто первый заказ (номер), потому что нам без разницы какой взять для проверки,
+    # потому что ищем потом именно его же на странице (рейс тут тоже не получаем, если только не
+    # почистить список заказов, но это, кажется, исключительная ситуация)
     ORDER_NUM_IN_HISTORY = (By.XPATH, "(//p[contains(@class, 'text text_type_digits-default')])[1]")
     TOTAL_COUNTER = (By.XPATH, "//p[text()='Выполнено за все время:']/following-sibling::p")
     TOTAL_COUNTER_VALUE = (By.XPATH, "//p[text()='Выполнено за все время:']/following-sibling::p[text() = '{}']")

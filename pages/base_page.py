@@ -111,3 +111,8 @@ class BasePage:
         source_element = self.driver.find_element(*sourse)
         target_element = self.driver.find_element(*target)
         drag_and_drop(self.driver, source_element, target_element)
+
+    @allure.step("Кликаем на элемент, перекрытый другим элементом выше по zIndex")
+    def click_overlapped(self, locator):
+        element = self.wait_for_element_presence(locator)
+        return self.driver.execute_script("arguments[0].click();", element)

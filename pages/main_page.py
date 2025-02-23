@@ -8,7 +8,7 @@ from urls import Urls
 class MainPage(BasePage):
     @allure.step("Открыть сайт")
     def open_main_site(self):
-        return self.driver.get(Urls.MAIN_SITE)
+        return self.open_site(Urls.MAIN_SITE)
 
     @allure.step("Дождаться загрузки страницы")
     def main_page_loading_wait(self):
@@ -39,8 +39,7 @@ class MainPage(BasePage):
 
     @allure.step("Закрываем поп-ап кликом на крестик")
     def close_popup(self):
-        element = self.wait_for_element_presence(MainPageLocators.CLOSE_BUTTON)
-        return self.driver.execute_script("arguments[0].click();", element)
+        return self.click_overlapped(MainPageLocators.CLOSE_BUTTON)
 
     @allure.step("Ждем пока появится поп-ап заказа")
     def wait_for_order_popup(self):
